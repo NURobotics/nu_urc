@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="nu_urc_rover">
+
+  <xacro:property name="r_name" value="nu_urc_rover" />
+
+  <xacro:macro name="ext_aluminum" params="name bar_length cs_length">
+    <link name="${name}">
+      <visual>
+        <geometry>
+          <box size="${bar_length} ${cs_length} ${cs_length}" />
+        </geometry>
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+      </visual>
+    </link>
+  </xacro:macro>
+
+  <xacro:macro name="chassis_generation" params="parent_base child_base">
+    <joint name="${parent_base}_${child_base}_connector">
+      <parent link="${parent_base}_chassis" />
+      <child link="${child_base}_chassis" />
+    </joint>
+  </xacro:macro>
+  
+  <xacro:ext_aluminum name="bf" bar_length="0.6" cs_length="0.02" />
+  <xacro:ext_aluminum name="bb" bar_length="0.6" cs_length="0.02" />
+  <xacro:ext_aluminum name="bl" bar_length="0.6" cs_length="0.02" />
+  <xacro:ext_aluminum name="br" bar_length="0.6" cs_length="0.02" />
+  <xacro:ext_aluminum name="tf" bar_length="0.6" cs_length="0.02" />
+  <xacro:ext_aluminum name="tb" bar_length="0.6" cs_length="0.02" />
+  <xacro:ext_aluminum name="tl" bar_length="0.6" cs_length="0.02" />
+  <xacro:ext_aluminum name="tr" bar_length="0.6" cs_length="0.02" />
+  <xacro:ext_aluminum name="bt_bl" bar_length="0.6" cs_length="0.02" />
+  <xacro:ext_aluminum name="bt_br" bar_length="0.6" cs_length="0.02" />
+  <xacro:ext_aluminum name="bt_fl" bar_length="0.6" cs_length="0.02" />
+  <xacro:ext_aluminum name="bt_fr" bar_length="0.6" cs_length="0.02" />
+  
+  <xacro:chassis_generation parent_base="bf" child_base="bl" />
+  <xacro:chassis_generation parent_base="bf" child_base="br" />
+  <xacro:chassis_generation parent_base="bb" child_base="bl" />
+  <xacro:chassis_generation parent_base="bb" child_base="br" />
+
+  <xacro:chassis_generation parent_base="tf" child_base="tl" />
+  <xacro:chassis_generation parent_base="tf" child_base="tr" />
+  <xacro:chassis_generation parent_base="tb" child_base="tl" />
+  <xacro:chassis_generation parent_base="tb" child_base="tr" />
+  
+  <xacro:chassis_generation parent_base="bb" child_base="bt_bl" />
+  <xacro:chassis_generation parent_base="bb" child_base="bt_br" />
+  <xacro:chassis_generation parent_base="bl" child_base="bt_bl" />
+  <xacro:chassis_generation parent_base="br" child_base="bt_br" />
+  
+  <xacro:chassis_generation parent_base="bf" child_base="bt_bl" />
+  <xacro:chassis_generation parent_base="bf" child_base="bt_br" />
+  <xacro:chassis_generation parent_base="bl" child_base="bt_fl" />
+  <xacro:chassis_generation parent_base="br" child_base="bt_fr" />
+  
+  <xacro:chassis_generation parent_base="tb" child_base="bt_tl" />
+  <xacro:chassis_generation parent_base="tb" child_base="bt_tr" />
+  <xacro:chassis_generation parent_base="tl" child_base="bt_tl" />
+  <xacro:chassis_generation parent_base="tr" child_base="bt_tr" />
+  
+  <xacro:chassis_generation parent_base="tf" child_base="bt_tl" />
+  <xacro:chassis_generation parent_base="tf" child_base="bt_tr" />
+  <xacro:chassis_generation parent_base="tl" child_base="bt_tl" />
+  <xacro:chassis_generation parent_base="tr" child_base="bt_tr" />
+  
+</robot>
