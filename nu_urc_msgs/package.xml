@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package>
+  <name>nu_urc_msgs</name>
+  <version>0.0.0</version>
+  <description>The nu_urc_msgs package</description>
+  <maintainer email="tgdiriba@todo.todo">tgdiriba</maintainer>
+
+
+  <license>TODO</license>
+
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>message_generation</build_depend>
+  
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>message_runtime</run_depend>
+  <buildtool_depend>catkin</buildtool_depend>
+
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- You can specify that this package is a metapackage here: -->
+    <!-- <metapackage/> -->
+
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>

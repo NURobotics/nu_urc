@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package>
+  <name>nu_urc_control</name>
+  <version>0.0.0</version>
+  <description>The nu_urc_control package</description>
+
+  <maintainer email="tgdiriba@todo.todo">tgdiriba</maintainer>
+
+  <license>TODO</license>
+
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>hardware_interface</build_depend>
+  <build_depend>controller_manager</build_depend>
+  <build_depend>controller_manager_msgs</build_depend>
+  <build_depend>controller_interface</build_depend>
+  
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>hardware_interface</run_depend>
+  <run_depend>controller_manager</run_depend>
+  <run_depend>controller_manager_msgs</run_depend>
+  <run_depend>controller_interface</run_depend>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+  <export>
+  </export>
+</package>
