@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="nu_urc_rover">
+
+  <xacro:property name="robot_name" value="nu_urc_rover" />
+  <xacro:property name="robot_base_width" value="0.6" />
+  <xacro:property name="robot_base_length" value="0.6" />
+  <xacro:property name="sheet_metal_thickness" value="0.01" />
+  
+  <!-- Cross sectional length of the aluminum bar -->
+  <xacro:property name="aluminum_cs_length" value="0.025" />
+  <xacro:property name="cube_length" value="0.025" />
+  <xacro:property name="aluminum_bar_length" value="0.6" />
+  
+  <!--                              BEGIN MACRO DEFINITION                              -->
+  
+  <!-- Perforated sheet metal -->
+  <xacro:macro name="sheet_metal" params="name width length depth">
+    <link name="${name}">
+      <visual>
+        <geometry>
+          <box size="${width} ${length} ${depth}" />
+          <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+        </geometry>
+      </visual>
+    </link>
+  </xacro:macro>
+
+  <!-- Extruded aluminum link with variable size -->
+  <xacro:macro name="ext_aluminum" params="name bar_length cs_length">
+    <link name="${name}_chassis">
+      <visual>
+        <geometry>
+          <box size="${bar_length} ${cs_length} ${cs_length}" />
+        </geometry>
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+      </visual>
+    </link>
+  </xacro:macro>
+  
+  <!-- Cube connection pieces between extruded aluminum links -->
+  <xacro:macro name="cube_connector" params="name length">
+    <link name="${name}">
+      <visual>
+        <geometry>
+          <box size="${length} ${length} ${length}" />
+        </geometry>
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+      </visual>
+    </link>
+  </xacro:macro>
+  
+  <!-- Chassis joint generation macro -->
+  <xacro:macro name="chassis_generation" params="parent_base child_base">
+    <joint name="${parent_base}_${child_base}_connector" type="continuous">
+      <parent link="${parent_base}" />
+      <child link="${child_base}" />
+    </joint>
+  </xacro:macro>
+  
+  <!--                              END MACRO DEFINITION                              -->
+  <!--                              BEGIN LINK DEFINITION                              -->
+  
+  <!-- Generate the base link -->
+  <xacro:sheet_metal name="base_link" width="${robot_base_width}" length="${robot_base_length}" depth="${sheet_metal_thickness}" />
+  
+  <!-- Generate all the extruded aluminum links that are easily modeled -->
+  <xacro:ext_aluminum name="bf" bar_length="${aluminum_bar_length}" cs_length="${aluminum_cs_length}" />
+  <xacro:ext_aluminum name="bb" bar_length="${aluminum_bar_length}" cs_length="${aluminum_cs_length}" />
+  <xacro:ext_aluminum name="bl" bar_length="${aluminum_bar_length}" cs_length="${aluminum_cs_length}" />
+  <xacro:ext_aluminum name="br" bar_length="${aluminum_bar_length}" cs_length="${aluminum_cs_length}" />
+  <xacro:ext_aluminum name="tf" bar_length="${aluminum_bar_length}" cs_length="${aluminum_cs_length}" />
+  <xacro:ext_aluminum name="tb" bar_length="${aluminum_bar_length}" cs_length="${aluminum_cs_length}" />
+  <xacro:ext_aluminum name="tl" bar_length="${aluminum_bar_length}" cs_length="${aluminum_cs_length}" />
+  <xacro:ext_aluminum name="tr" bar_length="${aluminum_bar_length}" cs_length="${aluminum_cs_length}" />
+  <xacro:ext_aluminum name="bt_bl" bar_length="${aluminum_bar_length}" cs_length="${aluminum_cs_length}" />
+  <xacro:ext_aluminum name="bt_br" bar_length="${aluminum_bar_length}" cs_length="${aluminum_cs_length}" />
+  <xacro:ext_aluminum name="bt_fl" bar_length="${aluminum_bar_length}" cs_length="${aluminum_cs_length}" />
+  <xacro:ext_aluminum name="bt_fr" bar_length="${aluminum_bar_length}" cs_length="${aluminum_cs_length}" />
+  
+  <!-- Generate all the cube connection pieces -->
+  <xacro:cube_connector name="tfl_cube_chassis" length="${cube_length}" />
+  <xacro:cube_connector name="tfr_cube_chassis" length="${cube_length}" />
+  <xacro:cube_connector name="tbl_cube_chassis" length="${cube_length}" />
+  <xacro:cube_connector name="tbr_cube_chassis" length="${cube_length}" />
+  <xacro:cube_connector name="bfl_cube_chassis" length="${cube_length}" />
+  <xacro:cube_connector name="bfr_cube_chassis" length="${cube_length}" />
+  <xacro:cube_connector name="bbl_cube_chassis" length="${cube_length}" />
+  <xacro:cube_connector name="bbr_cube_chassis" length="${cube_length}" />
+  
+  <!--                               END LINK DEFINITION                              -->
+  <!--                              BEGIN JOINT DEFINITION                              -->
+  
+  <!-- Base link bottom connections -->
+  <xacro:chassis_generation parent_base="base_link" child_base="bf_chassis" />
+  <xacro:chassis_generation parent_base="base_link" child_base="bb_chassis" />
+  <xacro:chassis_generation parent_base="base_link" child_base="bl_chassis" />
+  <xacro:chassis_generation parent_base="base_link" child_base="br_chassis" />
+  <xacro:chassis_generation parent_base="base_link" child_base="bfl_cube_chassis" />
+  <xacro:chassis_generation parent_base="base_link" child_base="bfr_cube_chassis" />
+  <xacro:chassis_generation parent_base="base_link" child_base="bbl_cube_chassis" />
+  <xacro:chassis_generation parent_base="base_link" child_base="bbr_cube_chassis" />
+  
+  <!-- Bottom cube to top link connections -->
+  <xacro:chassis_generation parent_base="bfl_cube_chassis" child_base="bt_fl_chassis" />
+  <xacro:chassis_generation parent_base="bfr_cube_chassis" child_base="bt_fr_chassis" />
+  <xacro:chassis_generation parent_base="bbl_cube_chassis" child_base="bt_bl_chassis" />
+  <xacro:chassis_generation parent_base="bbr_cube_chassis" child_base="bt_br_chassis" />
+  
+  <!-- Top link to top cube connections -->
+  <xacro:chassis_generation parent_base="bt_fl_chassis" child_base="tfl_cube_chassis" />
+  <xacro:chassis_generation parent_base="bt_fr_chassis" child_base="tfr_cube_chassis" />
+  <xacro:chassis_generation parent_base="bt_bl_chassis" child_base="tbl_cube_chassis" />
+  <xacro:chassis_generation parent_base="bt_br_chassis" child_base="tbr_cube_chassis" />
+  
+  <!-- Top branching cube connections to links -->
+  <xacro:chassis_generation parent_base="tfr_cube_chassis" child_base="tf_chassis" />
+  <xacro:chassis_generation parent_base="tfr_cube_chassis" child_base="tr_chassis" />
+  <xacro:chassis_generation parent_base="tbl_cube_chassis" child_base="tb_chassis" />
+  <xacro:chassis_generation parent_base="tbl_cube_chassis" child_base="tl_chassis" />
+  
+  <!--                               END JOINT DEFINITION                              -->
+  
+</robot>

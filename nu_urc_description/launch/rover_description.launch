@@ -1,0 +1,8 @@
+<launch>
+  
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find nu_urc_description)/urdf/nu_urc_rover.xacro'" />
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  <node name="static_transform_publisher" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 map base_link 100" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+
+</launch>
