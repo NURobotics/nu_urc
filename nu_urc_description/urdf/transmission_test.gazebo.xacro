@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="gazebo_rover">
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/nu_urc_rover</robotNamespace>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+    </plugin>
+  </gazebo>
+  
+  <xacro:macro name="gazebo_link" params="name color">
+    <gazebo reference="${name}_chassis">
+      <material>Gazebo/Red</material>
+    </gazebo>
+  </xacro:macro>
+  
+  <xacro:gazebo_link name="base_link" color="Red" />
+  <xacro:gazebo_link name="bf" color="Red" />
+  <xacro:gazebo_link name="bb" color="Red" />
+  <xacro:gazebo_link name="bl" color="Red" />
+  <xacro:gazebo_link name="br" color="Red" />
+  <xacro:gazebo_link name="tf" color="Red" />
+  <xacro:gazebo_link name="tb" color="Red" />
+  <xacro:gazebo_link name="tl" color="Red" />
+  <xacro:gazebo_link name="tr" color="Red" />
+  <xacro:gazebo_link name="bt_bl" color="Red" />
+  <xacro:gazebo_link name="bt_br" color="Red" />
+  <xacro:gazebo_link name="bt_fl" color="Red" />
+  <xacro:gazebo_link name="bt_fr" color="Red" />
+-->  
+</robot>
