@@ -19,6 +19,11 @@
   <xacro:property name="chassis_z_bottom_dist" value="${(sheet_metal_thickness + cube_length)/2}" />
   <xacro:property name="chassis_z_top_dist" value="${(cube_length + aluminum_bar_length)/2}" />
   
+  <!-- Wheel properties -->
+  <xacro:property name="wheel_shaft_length" value="0.1" />
+  <xacro:property name="wheel_radius" value="0.1016" />
+  <xacro:property name="wheel_length" value="0.1016" />
+  
   <!--                              BEGIN MACRO DEFINITION                              -->
   
   <!-- Perforated sheet metal -->
@@ -121,6 +126,57 @@
     </joint>
   </xacro:macro>
   
+  <xacro:macro name="rover_transmission" params="short_name long_name">
+    <transmission name="${short_name}_transmission">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${short_name}_wheel_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${long_name}">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+  </xacro:macro>
+  
+  <xacro:macro name="wheel_shaft" params="name bar_length cs_length">
+    <link name="${name}_wheel_shaft">
+      <visual>
+        <geometry>
+          <box size="${cs_length} ${cs_length} ${bar_length}" />
+        </geometry>
+        <origin rpy="1.570796 0.0 0.0" xyz="0.0 0.0 0.0" />
+      </visual>
+    </link>
+  </xacro:macro>
+  
+  <xacro:macro name="wheel" params="name radius length">
+    <link name="${name}_wheel">
+      <visual>
+        <geometry>
+          <cylinder radius="${radius}" length="${length}" />
+        </geometry>
+        <origin xyz="0.0 0.0 0.0" rpy="1.570796 0.0 0.0" />
+      </visual>
+    </link>
+  </xacro:macro>
+  
+  <xacro:macro name="chassis_shaft_joint" params="exta_name shaft_name xyz rpy">
+    <joint name="${shaft_name}_shaft_joint" type="continuous">
+      <parent link="${exta_name}_chassis" />
+      <child link="${shaft_name}_wheel_shaft" />
+      <origin xyz="${xyz}" rpy="${rpy}" />
+    </joint>
+  </xacro:macro>
+  
+  <xacro:macro name="shaft_wheel_joint" params="wheel_name shaft_name xyz rpy">
+    <joint name="${wheel_name}_wheel_joint" type="continuous">
+      <parent link="${shaft_name}_wheel_shaft" />
+      <child link="${wheel_name}_wheel" />
+      <origin xyz="${xyz}" rpy="${rpy}" />
+    </joint>
+  </xacro:macro>
+  
   <!--                              END MACRO DEFINITION                              -->
   <!--                              BEGIN LINK DEFINITION                              -->
   
@@ -141,7 +197,7 @@
   <xacro:ext_aluminum_z name="bt_br" bar_length="${aluminum_bar_length}" cs_length="${aluminum_cs_length}" />
   <xacro:ext_aluminum_z name="bt_fl" bar_length="${aluminum_bar_length}" cs_length="${aluminum_cs_length}" />
   <xacro:ext_aluminum_z name="bt_fr" bar_length="${aluminum_bar_length}" cs_length="${aluminum_cs_length}" />
-  
+
   <!-- Generate all the cube connection pieces -->
   <xacro:cube_connector name="tfl_cube_chassis" length="${cube_length}" />
   <xacro:cube_connector name="tfr_cube_chassis" length="${cube_length}" />
@@ -152,7 +208,18 @@
   <xacro:cube_connector name="bbl_cube_chassis" length="${cube_length}" />
   <xacro:cube_connector name="bbr_cube_chassis" length="${cube_length}" />
   
-  <!--                               END LINK DEFINITION                              -->
+  <!-- Generate all the wheel and associated links -->
+  <xacro:wheel_shaft name="fl" bar_length="${wheel_shaft_length}" cs_length="${aluminum_cs_length}" />
+  <xacro:wheel_shaft name="fr" bar_length="${wheel_shaft_length}" cs_length="${aluminum_cs_length}" />
+  <xacro:wheel_shaft name="bl" bar_length="${wheel_shaft_length}" cs_length="${aluminum_cs_length}" />
+  <xacro:wheel_shaft name="br" bar_length="${wheel_shaft_length}" cs_length="${aluminum_cs_length}" />
+  
+  <xacro:wheel name="fl" radius="${wheel_radius}" length="${wheel_length}" />
+  <xacro:wheel name="fr" radius="${wheel_radius}" length="${wheel_length}" />
+  <xacro:wheel name="bl" radius="${wheel_radius}" length="${wheel_length}" />
+  <xacro:wheel name="br" radius="${wheel_radius}" length="${wheel_length}" />
+  
+  <!--                              END LINK DEFINITION                              -->
   <!--                              BEGIN JOINT DEFINITION                              -->
   
   <!-- Base link bottom connections -->
@@ -183,6 +250,23 @@
   <xacro:chassis_generation parent_base="tbl_cube_chassis" child_base="tb_chassis" xyz="0.0 -${chassis_y_dist} 0.0" rpy="0.0 0.0 0.0" />
   <xacro:chassis_generation parent_base="tbl_cube_chassis" child_base="tl_chassis" xyz="${chassis_x_dist} 0.0 0.0" rpy="0.0 0.0 0.0" />
   
+  <!-- All of the wheel joints -->
+  <xacro:chassis_shaft_joint shaft_name="fl" exta_name="bl" xyz="${(aluminum_bar_length-aluminum_cs_length)/2} ${(wheel_shaft_length+aluminum_cs_length)/2} 0.0" rpy="0.0 0.0 0.0" />
+  <xacro:chassis_shaft_joint shaft_name="fr" exta_name="br" xyz="${(aluminum_bar_length-aluminum_cs_length)/2} -${(wheel_shaft_length+aluminum_cs_length)/2} 0.0" rpy="0.0 0.0 0.0" />
+  <xacro:chassis_shaft_joint shaft_name="bl" exta_name="bl" xyz="-${(aluminum_bar_length-aluminum_cs_length)/2} ${(wheel_shaft_length+aluminum_cs_length)/2} 0.0" rpy="0.0 0.0 0.0" />
+  <xacro:chassis_shaft_joint shaft_name="br" exta_name="br" xyz="-${(aluminum_bar_length-aluminum_cs_length)/2} -${(wheel_shaft_length+aluminum_cs_length)/2} 0.0" rpy="0.0 0.0 0.0" />
+
+  <xacro:shaft_wheel_joint wheel_name="fl" shaft_name="fl" xyz="0.0 ${(wheel_shaft_length+wheel_length)/2} 0.0" rpy="0.0 0.0 0.0" />
+  <xacro:shaft_wheel_joint wheel_name="fr" shaft_name="fr" xyz="0.0 ${-(wheel_shaft_length+wheel_length)/2} 0.0" rpy="0.0 0.0 0.0" />
+  <xacro:shaft_wheel_joint wheel_name="bl" shaft_name="bl"  xyz="0.0 ${(wheel_shaft_length+wheel_length)/2} 0.0" rpy="0.0 0.0 0.0" />
+  <xacro:shaft_wheel_joint wheel_name="br" shaft_name="br" xyz="0.0 ${-(wheel_shaft_length+wheel_length)/2} 0.0" rpy="0.0 0.0 0.0" />
+  
   <!--                               END JOINT DEFINITION                              -->
+  <!--                           BEGIN MOTOR TRANSMISSION DEFINITION                   -->
+  
+  <xacro:rover_transmission short_name="fl" long_name="front_left" />
+  <xacro:rover_transmission short_name="fr" long_name="front_right" />
+  <xacro:rover_transmission short_name="bl" long_name="back_left" />
+  <xacro:rover_transmission short_name="br" long_name="back_right" />
   
 </robot>

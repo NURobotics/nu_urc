@@ -6,6 +6,7 @@
 <robot name="nu_urc_rover" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <!-- Cross sectional length of the aluminum bar -->
   <!-- Chassis link position calculations -->
+  <!-- Wheel properties -->
   <!--                              BEGIN MACRO DEFINITION                              -->
   <!-- Perforated sheet metal -->
   <!-- Extruded aluminum link with variable size -->
@@ -185,112 +186,259 @@
       <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
     </visual>
   </link>
-  <!--                               END LINK DEFINITION                              -->
+  <!-- Generate all the wheel and associated links -->
+  <link name="fl_wheel_shaft">
+    <visual>
+      <geometry>
+        <box size="0.025 0.025 0.1"/>
+      </geometry>
+      <origin rpy="1.570796 0.0 0.0" xyz="0.0 0.0 0.0"/>
+    </visual>
+  </link>
+  <link name="fr_wheel_shaft">
+    <visual>
+      <geometry>
+        <box size="0.025 0.025 0.1"/>
+      </geometry>
+      <origin rpy="1.570796 0.0 0.0" xyz="0.0 0.0 0.0"/>
+    </visual>
+  </link>
+  <link name="bl_wheel_shaft">
+    <visual>
+      <geometry>
+        <box size="0.025 0.025 0.1"/>
+      </geometry>
+      <origin rpy="1.570796 0.0 0.0" xyz="0.0 0.0 0.0"/>
+    </visual>
+  </link>
+  <link name="br_wheel_shaft">
+    <visual>
+      <geometry>
+        <box size="0.025 0.025 0.1"/>
+      </geometry>
+      <origin rpy="1.570796 0.0 0.0" xyz="0.0 0.0 0.0"/>
+    </visual>
+  </link>
+  <link name="fl_wheel">
+    <visual>
+      <geometry>
+        <cylinder length="0.1016" radius="0.1016"/>
+      </geometry>
+      <origin rpy="1.570796 0.0 0.0" xyz="0.0 0.0 0.0"/>
+    </visual>
+  </link>
+  <link name="fr_wheel">
+    <visual>
+      <geometry>
+        <cylinder length="0.1016" radius="0.1016"/>
+      </geometry>
+      <origin rpy="1.570796 0.0 0.0" xyz="0.0 0.0 0.0"/>
+    </visual>
+  </link>
+  <link name="bl_wheel">
+    <visual>
+      <geometry>
+        <cylinder length="0.1016" radius="0.1016"/>
+      </geometry>
+      <origin rpy="1.570796 0.0 0.0" xyz="0.0 0.0 0.0"/>
+    </visual>
+  </link>
+  <link name="br_wheel">
+    <visual>
+      <geometry>
+        <cylinder length="0.1016" radius="0.1016"/>
+      </geometry>
+      <origin rpy="1.570796 0.0 0.0" xyz="0.0 0.0 0.0"/>
+    </visual>
+  </link>
+  <!--                              END LINK DEFINITION                              -->
   <!--                              BEGIN JOINT DEFINITION                              -->
   <!-- Base link bottom connections -->
-  <joint name="base_link_bf_chassis_connector" type="fixed">
+  <joint name="base_link_bf_chassis_connector" type="continuous">
     <parent link="base_link"/>
     <child link="bf_chassis"/>
     <origin rpy="0.0 0.0 0.0" xyz="0.2875 0.0 -0.0175"/>
   </joint>
-  <joint name="base_link_bb_chassis_connector" type="fixed">
+  <joint name="base_link_bb_chassis_connector" type="continuous">
     <parent link="base_link"/>
     <child link="bb_chassis"/>
     <origin rpy="0.0 0.0 0.0" xyz="-0.2875 0.0 -0.0175"/>
   </joint>
-  <joint name="base_link_bl_chassis_connector" type="fixed">
+  <joint name="base_link_bl_chassis_connector" type="continuous">
     <parent link="base_link"/>
     <child link="bl_chassis"/>
     <origin rpy="0.0 0.0 0.0" xyz="0.0 0.2875 -0.0175"/>
   </joint>
-  <joint name="base_link_br_chassis_connector" type="fixed">
+  <joint name="base_link_br_chassis_connector" type="continuous">
     <parent link="base_link"/>
     <child link="br_chassis"/>
     <origin rpy="0.0 0.0 0.0" xyz="0.0 -0.2875 -0.0175"/>
   </joint>
-  <joint name="base_link_bfl_cube_chassis_connector" type="fixed">
+  <joint name="base_link_bfl_cube_chassis_connector" type="continuous">
     <parent link="base_link"/>
     <child link="bfl_cube_chassis"/>
     <origin rpy="0.0 0.0 0.0" xyz="0.2875 0.2875 -0.0175"/>
   </joint>
-  <joint name="base_link_bfr_cube_chassis_connector" type="fixed">
+  <joint name="base_link_bfr_cube_chassis_connector" type="continuous">
     <parent link="base_link"/>
     <child link="bfr_cube_chassis"/>
     <origin rpy="0.0 0.0 0.0" xyz="0.2875 -0.2875 -0.0175"/>
   </joint>
-  <joint name="base_link_bbl_cube_chassis_connector" type="fixed">
+  <joint name="base_link_bbl_cube_chassis_connector" type="continuous">
     <parent link="base_link"/>
     <child link="bbl_cube_chassis"/>
     <origin rpy="0.0 0.0 0.0" xyz="-0.2875 0.2875 -0.0175"/>
   </joint>
-  <joint name="base_link_bbr_cube_chassis_connector" type="fixed">
+  <joint name="base_link_bbr_cube_chassis_connector" type="continuous">
     <parent link="base_link"/>
     <child link="bbr_cube_chassis"/>
     <origin rpy="0.0 0.0 0.0" xyz="-0.2875 -0.2875 -0.0175"/>
   </joint>
   <!-- Bottom cube to top link connections -->
-  <joint name="bfl_cube_chassis_bt_fl_chassis_connector" type="fixed">
+  <joint name="bfl_cube_chassis_bt_fl_chassis_connector" type="continuous">
     <parent link="bfl_cube_chassis"/>
     <child link="bt_fl_chassis"/>
     <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.2875"/>
   </joint>
-  <joint name="bfr_cube_chassis_bt_fr_chassis_connector" type="fixed">
+  <joint name="bfr_cube_chassis_bt_fr_chassis_connector" type="continuous">
     <parent link="bfr_cube_chassis"/>
     <child link="bt_fr_chassis"/>
     <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.2875"/>
   </joint>
-  <joint name="bbl_cube_chassis_bt_bl_chassis_connector" type="fixed">
+  <joint name="bbl_cube_chassis_bt_bl_chassis_connector" type="continuous">
     <parent link="bbl_cube_chassis"/>
     <child link="bt_bl_chassis"/>
     <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.2875"/>
   </joint>
-  <joint name="bbr_cube_chassis_bt_br_chassis_connector" type="fixed">
+  <joint name="bbr_cube_chassis_bt_br_chassis_connector" type="continuous">
     <parent link="bbr_cube_chassis"/>
     <child link="bt_br_chassis"/>
     <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.2875"/>
   </joint>
   <!-- Top link to top cube connections -->
-  <joint name="bt_fl_chassis_tfl_cube_chassis_connector" type="fixed">
+  <joint name="bt_fl_chassis_tfl_cube_chassis_connector" type="continuous">
     <parent link="bt_fl_chassis"/>
     <child link="tfl_cube_chassis"/>
     <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.2875"/>
   </joint>
-  <joint name="bt_fr_chassis_tfr_cube_chassis_connector" type="fixed">
+  <joint name="bt_fr_chassis_tfr_cube_chassis_connector" type="continuous">
     <parent link="bt_fr_chassis"/>
     <child link="tfr_cube_chassis"/>
     <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.2875"/>
   </joint>
-  <joint name="bt_bl_chassis_tbl_cube_chassis_connector" type="fixed">
+  <joint name="bt_bl_chassis_tbl_cube_chassis_connector" type="continuous">
     <parent link="bt_bl_chassis"/>
     <child link="tbl_cube_chassis"/>
     <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.2875"/>
   </joint>
-  <joint name="bt_br_chassis_tbr_cube_chassis_connector" type="fixed">
+  <joint name="bt_br_chassis_tbr_cube_chassis_connector" type="continuous">
     <parent link="bt_br_chassis"/>
     <child link="tbr_cube_chassis"/>
     <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.2875"/>
   </joint>
   <!-- Top branching cube connections to links -->
-  <joint name="tfr_cube_chassis_tf_chassis_connector" type="fixed">
+  <joint name="tfr_cube_chassis_tf_chassis_connector" type="continuous">
     <parent link="tfr_cube_chassis"/>
     <child link="tf_chassis"/>
     <origin rpy="0.0 0.0 0.0" xyz="0.0 0.2875 0.0"/>
   </joint>
-  <joint name="tfr_cube_chassis_tr_chassis_connector" type="fixed">
+  <joint name="tfr_cube_chassis_tr_chassis_connector" type="continuous">
     <parent link="tfr_cube_chassis"/>
     <child link="tr_chassis"/>
     <origin rpy="0.0 0.0 0.0" xyz="-0.2875 0.0 0.0"/>
   </joint>
-  <joint name="tbl_cube_chassis_tb_chassis_connector" type="fixed">
+  <joint name="tbl_cube_chassis_tb_chassis_connector" type="continuous">
     <parent link="tbl_cube_chassis"/>
     <child link="tb_chassis"/>
     <origin rpy="0.0 0.0 0.0" xyz="0.0 -0.2875 0.0"/>
   </joint>
-  <joint name="tbl_cube_chassis_tl_chassis_connector" type="fixed">
+  <joint name="tbl_cube_chassis_tl_chassis_connector" type="continuous">
     <parent link="tbl_cube_chassis"/>
     <child link="tl_chassis"/>
     <origin rpy="0.0 0.0 0.0" xyz="0.2875 0.0 0.0"/>
   </joint>
+  <!-- All of the wheel joints -->
+  <joint name="fl_shaft_joint" type="continuous">
+    <parent link="bl_chassis"/>
+    <child link="fl_wheel_shaft"/>
+    <origin rpy="0.0 0.0 0.0" xyz="0.2625 0.0625 0.0"/>
+  </joint>
+  <joint name="fr_shaft_joint" type="continuous">
+    <parent link="br_chassis"/>
+    <child link="fr_wheel_shaft"/>
+    <origin rpy="0.0 0.0 0.0" xyz="0.2625 -0.0625 0.0"/>
+  </joint>
+  <joint name="bl_shaft_joint" type="continuous">
+    <parent link="bl_chassis"/>
+    <child link="bl_wheel_shaft"/>
+    <origin rpy="0.0 0.0 0.0" xyz="-0.2625 0.0625 0.0"/>
+  </joint>
+  <joint name="br_shaft_joint" type="continuous">
+    <parent link="br_chassis"/>
+    <child link="br_wheel_shaft"/>
+    <origin rpy="0.0 0.0 0.0" xyz="-0.2625 -0.0625 0.0"/>
+  </joint>
+  <joint name="fl_wheel_joint" type="continuous">
+    <parent link="fl_wheel_shaft"/>
+    <child link="fl_wheel"/>
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.1008 0.0"/>
+  </joint>
+  <joint name="fr_wheel_joint" type="continuous">
+    <parent link="fr_wheel_shaft"/>
+    <child link="fr_wheel"/>
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 -0.1008 0.0"/>
+  </joint>
+  <joint name="bl_wheel_joint" type="continuous">
+    <parent link="bl_wheel_shaft"/>
+    <child link="bl_wheel"/>
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.1008 0.0"/>
+  </joint>
+  <joint name="br_wheel_joint" type="continuous">
+    <parent link="br_wheel_shaft"/>
+    <child link="br_wheel"/>
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 -0.1008 0.0"/>
+  </joint>
   <!--                               END JOINT DEFINITION                              -->
+  <!--                           BEGIN MOTOR TRANSMISSION DEFINITION                   -->
+  <transmission name="fl_transmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="fl_wheel_joint">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="front_left">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="fr_transmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="fr_wheel_joint">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="front_right">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="bl_transmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="bl_wheel_joint">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="back_left">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="br_transmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="br_wheel_joint">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="back_right">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
 </robot>
 
