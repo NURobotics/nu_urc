@@ -1,2 +1,2 @@
-sensor_msgs/NavSatFix gps
-sensor_msgs/Imu imu
+nu_urc_msgs/GpsFix gps
+nu_urc_msgs/Imu imu

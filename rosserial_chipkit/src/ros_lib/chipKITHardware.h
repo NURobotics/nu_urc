@@ -35,7 +35,8 @@
 #ifndef ROS_CHIPKIT_HARDWARE_H_
 #define ROS_CHIPKIT_HARDWARE_H_
 
-#include <HardwareSerial.h>
+#include <WProgram.h>
+#define SERIAL_CLASS HardwareSerial
 
 class chipKITHardware {
   public:

@@ -103,7 +103,8 @@ include_directories(
 ## Declare a cpp library
 add_library(nu_urc_controllib
   src/${PROJECT_NAME}/RoverHW.cpp
-  src/${PROJECT_NAME}/VelocityPIDController.cpp
+  src/${PROJECT_NAME}/DriveHW.cpp
+#  src/${PROJECT_NAME}/VelocityPIDController.cpp
 )
 
 target_link_libraries(nu_urc_controllib ${catkin_LIBRARIES})

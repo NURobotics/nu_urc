@@ -49,6 +49,8 @@ add_message_files(
   FILES
   SensorData.msg
   GpsFix.msg
+  Imu.msg
+  JointCommands.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -69,8 +71,6 @@ add_message_files(
 generate_messages(
   DEPENDENCIES
   std_msgs
-  sensor_msgs
-  geometry_msgs
 )
 
 ###################################
