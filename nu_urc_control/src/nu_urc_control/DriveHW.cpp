@@ -11,9 +11,15 @@ DriveHW::DriveHW()
   js_.name.push_back("back_right_wheel");
   
   // Resize joints with respect to joint name
-  js_.position.resize(js_.name.size());
-  js_.velocity.resize(js_.name.size());
-  js_.effort.resize(js_.name.size());
+  js_.position.resize(NUM_DRIVE_JOINTS);
+  js_.velocity.resize(NUM_DRIVE_JOINTS);
+  js_.effort.resize(NUM_DRIVE_JOINTS);
+  
+  jc_.names.push_back("front_left_wheel");
+  jc_.names.push_back("front_right_wheel");
+  jc_.names.push_back("back_left_wheel");
+  jc_.names.push_back("back_right_wheel");
+  jc_.commands.resize(NUM_DRIVE_JOINTS);
   
   jc_publisher_ = nh_.advertise<nu_urc_msgs::JointCommands>("/joints/drive/cmd",100);
 }

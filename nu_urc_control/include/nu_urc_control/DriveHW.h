@@ -1,6 +1,8 @@
 #ifndef NU_URC_DRIVEHW_H
 #define NU_URC_DRIVEHW_H
 
+#define NUM_DRIVE_JOINTS      4
+
 #include <ros/ros.h>
 #include <hardware_interface/joint_state_interface.h>
 #include <hardware_interface/joint_command_interface.h>

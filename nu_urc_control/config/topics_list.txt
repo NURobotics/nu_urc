@@ -1,7 +1,0 @@
-Sensor Data
----
-+ nu_urc/sensor/NAME
-
-Motor Control
----
-+ nu_urc/motor/NAME/[position|velocity|effort]
