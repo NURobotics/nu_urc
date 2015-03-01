@@ -1,0 +1,9 @@
+<launch>
+  <arg name="calib_dir" default="~/Code/ros_ws/src/nu_urc/nu_urc_vision/config/" />
+  
+  <!-- Publish raw feed from all cameras -->
+  <node name="camera_video_publisher" pkg="nu_urc_vision" type="camera_video_publisher">
+    <param name="calib_dir" value="$(arg calib_dir)" type="str" />
+  </node>
+  
+</launch>

@@ -1,0 +1,9 @@
+<launch>
+  <arg name="camera_number" default="0" />
+  <arg name="image" default="camera_$(arg camera_number)" />
+  <arg name="camera" default="camera_$(arg camera_number)" />
+  <node name="cameracalibrator" pkg="camera_calibration" type="cameracalibrator.py" args="--size 8x6 --square 0.108">
+    <remap from="image" to="$(arg image)" />
+    <remap from="camera" to="$(arg camera)" />
+  </node>
+</launch>
