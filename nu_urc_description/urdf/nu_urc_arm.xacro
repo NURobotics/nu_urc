@@ -6,14 +6,14 @@
 <xacro:property name="pi" value="3.1415926" />
 
 <!-- The dimensions of the arm base's linear rail system -->
-<xacro:property name="arm_prism_base_l" value="1" />
-<xacro:property name="arm_prism_base_w" value="1" />
-<xacro:property name="arm_prism_base_h" value="1" />
+<xacro:property name="arm_prism_base_l" value="0.4572" />
+<xacro:property name="arm_prism_base_w" value="0.1016" />
+<xacro:property name="arm_prism_base_h" value="0.1016" />
 
 <!-- The dimensions of the arm base's swivel system -->
-<xacro:property name="arm_swivel_base_l" value="1" />
-<xacro:property name="arm_swivel_base_w" value="1" />
-<xacro:property name="arm_swivel_base_h" value="1" />
+<xacro:property name="arm_swivel_base_l" value="0.1016" />
+<xacro:property name="arm_swivel_base_w" value="0.1016" />
+<xacro:property name="arm_swivel_base_h" value="0.1016" />
 
 <!-- The dimensions of first arm link -->
 <!-- The two revolute arm links are the same length at around 9.5 inches -->
@@ -28,7 +28,8 @@
 <xacro:property name="arm_rot_1_h" value="0.0381" />
 
 <!-- The displacement of first arm link with respect to the swivel base -->
-<xacro:property name="arm_swivel_base_rot_0_h" value="0.0254" />
+<xacro:property name="arm_prism_base_swivel_base_h" value="${(arm_prism_base_h+arm_swivel_base_h)/2}" />
+<xacro:property name="arm_swivel_base_rot_0_h" value="${arm_swivel_base_h/2}" />
 
 <!-- Joint Limits -->
 <xacro:property name="arm_swivel_base_rot_0_lower" value="0" />
@@ -39,7 +40,7 @@
 <link name="arm_prism_base">
   <visual>
     <geometry>
-      <box size="${arm_prism_base_w} ${arm_prism_base_h} ${arm_prism_base_l}" />
+      <box size="${arm_prism_base_w} ${arm_prism_base_l} ${arm_prism_base_h}" />
       <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
     </geometry>
   </visual>
@@ -58,8 +59,8 @@
   <visual>
     <geometry>
       <box size="${arm_rot_0_w} ${arm_rot_0_h} ${arm_rot_0_l}" />
-      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
     </geometry>
+   <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 ${arm_rot_0_l/2}" />
   </visual>
 </link>
 
@@ -67,15 +68,15 @@
   <visual>
     <geometry>
       <box size="${arm_rot_1_w} ${arm_rot_1_h} ${arm_rot_1_l}" />
-      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
     </geometry>
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 ${arm_rot_1_l/2}" />
   </visual>
 </link>
 
 <joint name="arm_prism_base_swivel_base" type="continuous">
   <parent link="arm_prism_base" />
   <child link="arm_swivel_base" />
-  <origin xyz="0.0 0.0 ${arm_prism_base_h}" rpy="0.0 0.0 0.0" />
+  <origin xyz="0.0 0.0 ${arm_prism_base_swivel_base_h}" rpy="0.0 0.0 0.0" />
   <axis xyz="0 0 1" />
 </joint>
 

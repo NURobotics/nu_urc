@@ -8,13 +8,15 @@
   <!-- The dimensions of the arm base's linear rail system -->
   <!-- The dimensions of the arm base's swivel system -->
   <!-- The dimensions of first arm link -->
+  <!-- The two revolute arm links are the same length at around 9.5 inches -->
   <!-- The dimensions of the second arm link -->
+  <!-- The two revolute arm links are the same length at around 9.5 inches -->
   <!-- The displacement of first arm link with respect to the swivel base -->
   <!-- Joint Limits -->
   <link name="arm_prism_base">
     <visual>
       <geometry>
-        <box size="1 1 1"/>
+        <box size="0.1016 0.4572 0.1016"/>
         <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
       </geometry>
     </visual>
@@ -22,7 +24,7 @@
   <link name="arm_swivel_base">
     <visual>
       <geometry>
-        <box size="1 1 1"/>
+        <box size="0.1016 0.1016 0.1016"/>
         <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
       </geometry>
     </visual>
@@ -31,28 +33,28 @@
     <visual>
       <geometry>
         <box size="0.0381 0.0381 0.1524"/>
-        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
       </geometry>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0762"/>
     </visual>
   </link>
   <link name="arm_rot_1">
     <visual>
       <geometry>
         <box size="0.0381 0.0381 0.1524"/>
-        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
       </geometry>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0762"/>
     </visual>
   </link>
   <joint name="arm_prism_base_swivel_base" type="continuous">
     <parent link="arm_prism_base"/>
     <child link="arm_swivel_base"/>
-    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 1"/>
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.1016"/>
     <axis xyz="0 0 1"/>
   </joint>
   <joint name="arm_swivel_base_rot_0" type="revolute">
     <parent link="arm_swivel_base"/>
     <child link="arm_rot_0"/>
-    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0254"/>
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0508"/>
     <axis xyz="0 1 0"/>
     <limit effort="1000.0" lower="0" upper="3.1415926" velocity="3.1415926"/>
   </joint>
