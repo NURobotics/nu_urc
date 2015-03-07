@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="nu_urc_arm">
+
+<!-- PI constant -->
+<xacro:property name="pi" value="3.1415926" />
+
+<!-- The dimensions of the arm base's linear rail system -->
+<xacro:property name="arm_prism_base_l" value="1" />
+<xacro:property name="arm_prism_base_w" value="1" />
+<xacro:property name="arm_prism_base_h" value="1" />
+
+<!-- The dimensions of the arm base's swivel system -->
+<xacro:property name="arm_swivel_base_l" value="1" />
+<xacro:property name="arm_swivel_base_w" value="1" />
+<xacro:property name="arm_swivel_base_h" value="1" />
+
+<!-- The dimensions of first arm link -->
+<!-- The two revolute arm links are the same length at around 9.5 inches -->
+<xacro:property name="arm_rot_0_l" value="0.1524" />
+<xacro:property name="arm_rot_0_w" value="0.0381" />
+<xacro:property name="arm_rot_0_h" value="0.0381" />
+
+<!-- The dimensions of the second arm link -->
+<!-- The two revolute arm links are the same length at around 9.5 inches -->
+<xacro:property name="arm_rot_1_l" value="0.1524" />
+<xacro:property name="arm_rot_1_w" value="0.0381" />
+<xacro:property name="arm_rot_1_h" value="0.0381" />
+
+<!-- The displacement of first arm link with respect to the swivel base -->
+<xacro:property name="arm_swivel_base_rot_0_h" value="0.0254" />
+
+<!-- Joint Limits -->
+<xacro:property name="arm_swivel_base_rot_0_lower" value="0" />
+<xacro:property name="arm_swivel_base_rot_0_upper" value="${pi}" />
+<xacro:property name="arm_rot_0_1_lower" value="0" />
+<xacro:property name="arm_rot_0_1_upper" value="${pi}" />
+
+<link name="arm_prism_base">
+  <visual>
+    <geometry>
+      <box size="${arm_prism_base_w} ${arm_prism_base_h} ${arm_prism_base_l}" />
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+    </geometry>
+  </visual>
+</link>
+
+<link name="arm_swivel_base">
+  <visual>
+    <geometry>
+      <box size="${arm_swivel_base_w} ${arm_swivel_base_h} ${arm_swivel_base_l}" />
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+    </geometry>
+  </visual>
+</link>
+
+<link name="arm_rot_0">
+  <visual>
+    <geometry>
+      <box size="${arm_rot_0_w} ${arm_rot_0_h} ${arm_rot_0_l}" />
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+    </geometry>
+  </visual>
+</link>
+
+<link name="arm_rot_1">
+  <visual>
+    <geometry>
+      <box size="${arm_rot_1_w} ${arm_rot_1_h} ${arm_rot_1_l}" />
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+    </geometry>
+  </visual>
+</link>
+
+<joint name="arm_prism_base_swivel_base" type="continuous">
+  <parent link="arm_prism_base" />
+  <child link="arm_swivel_base" />
+  <origin xyz="0.0 0.0 ${arm_prism_base_h}" rpy="0.0 0.0 0.0" />
+  <axis xyz="0 0 1" />
+</joint>
+
+<joint name="arm_swivel_base_rot_0" type="revolute">
+  <parent link="arm_swivel_base" />
+  <child link="arm_rot_0" />
+  <origin xyz="0.0 0.0 ${arm_swivel_base_rot_0_h}" rpy="0.0 0.0 0.0" />
+  <axis xyz="0 1 0" />
+  <limit lower="${arm_swivel_base_rot_0_lower}" upper="${arm_swivel_base_rot_0_upper}" effort="1000.0" velocity="${pi}" />
+</joint>
+
+<joint name="arm_rot_0_1" type="revolute">
+  <parent link="arm_rot_0" />
+  <child link="arm_rot_1" />
+  <origin xyz="0.0 0.0 ${arm_rot_0_l}" rpy="0.0 0.0 0.0" />
+  <axis xyz="0 1 0" />
+  <limit lower="${arm_rot_0_1_lower}" upper="${arm_rot_0_1_upper}" effort="1000.0" velocity="${pi}" />
+</joint>
+
+</robot>

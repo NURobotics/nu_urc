@@ -1,0 +1,10 @@
+<launch>
+  
+  <param name="robot_description" type="str" textfile="$(find nu_urc_description)/urdf/nu_urc_arm.urdf" />
+  <param name="use_gui" type="bool" value="true" />
+
+  <node pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 /map /arm_prism_base 100" name="map_static_publisher" />
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="arm_state_publisher" />
+  <node pkg="joint_state_publisher" type="joint_state_publisher" name="arm_js_publisher" />
+  
+</launch>
